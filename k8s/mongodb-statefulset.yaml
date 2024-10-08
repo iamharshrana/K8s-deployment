@@ -20,18 +20,26 @@ spec:
         - containerPort: 27017
         volumeMounts:
         - name: mongo-persistent-storage
-          mountPath: /data/db
+          mountPath: /mnt/data/db
         env:
         - name: MONGO_INITDB_ROOT_USERNAME
-          value: root
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongodb-root-username
         - name: MONGO_INITDB_ROOT_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongodb-root-password
+        - name: MONGO_INITDB_DATABASE
+          value: "admin"
   volumeClaimTemplates:
   - metadata:
       name: mongo-persistent-storage
     spec:
       accessModes: [ "ReadWriteOnce" ]
-      storageClassName: manual
+      storageClassName: standard
       resources:
         requests:
           storage: 1Gi

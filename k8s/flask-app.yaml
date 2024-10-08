@@ -20,7 +20,17 @@ spec:
         - containerPort: 5000
         env:
         - name: MONGODB_URI
-          value: "mongodb://mongodb-service:27017/"
+          value: "mongodb://flaskuser:flaskpassword@mongodb-service:27017/flask_db?authSource=admin"  # Use direct values or secret references
+        - name: MONGO_INITDB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongodb-flask-username
+        - name: MONGO_INITDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongodb-flask-password
         resources:
           requests:
             memory: "250Mi"

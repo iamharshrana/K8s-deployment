@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: flask-app-service
 spec:
-  type: NodePort
+  type: NodePort # Use LoadBalancer if on cloud
   selector:
     app: flask-app
   ports:
     - protocol: TCP
-      port: 3000       # Changed service port to 3000
-      targetPort: 5000 # Keep this as the port your app listens on
-      nodePort: 32051  # (optional) Change this to your desired node port
+      port: 3000       # Service port
+      targetPort: 5000 # Flask app's port
+      nodePort: 32000  # NodePort (choose a custom port)

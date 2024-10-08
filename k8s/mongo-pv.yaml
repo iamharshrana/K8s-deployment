@@ -4,10 +4,10 @@ metadata:
   name: mongo-pv
 spec:
   capacity:
-    storage: 1Gi
+    storage: 10Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: manual
+  storageClassName: standard # This should match your PVC
   hostPath:
-    path: "/mnt/data/mongo"
+    path: "/mnt/data/mongo"  # Ensure this path exists on your host
